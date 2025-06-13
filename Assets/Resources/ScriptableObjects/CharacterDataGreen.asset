@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f85a6fd6de30ddc45a9578b78f0d671c, type: 3}
+  m_Name: CharacterDataGreen
+  m_EditorClassIdentifier: 
+  characterName: Green
+  characterPrefab: {fileID: 7645859021009163807, guid: f8d58cfa7bb14a1c8e4af8e094793246,
+    type: 3}
+  characterSprite: {fileID: 21300000, guid: f8372b4ba4f5a9a49b80a67d326ad156, type: 3}
+  characterLevel: 2
+  maxHealth: 100
+  baseDamage: 10
+  moveSpeed: 5
+  description: 
