@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f85a6fd6de30ddc45a9578b78f0d671c, type: 3}
-  m_Name: CharacterDataBlue
+  m_Name: CharacterDataPink
   m_EditorClassIdentifier: 
-  characterName: Blue
-  characterPrefab: {fileID: 6307800999918473669, guid: ad60cf9f650d4dd1a61faf1c0db6dbab,
+  characterName: Yellow
+  characterPrefab: {fileID: 6193644456894574910, guid: d25129c7804c4ac6bcdd469d80545b44,
     type: 3}
-  characterSprite: {fileID: 864952535, guid: fc31be5223b1a9847b5450a7ae062b62, type: 3}
-  characterLevel: 3
+  characterSprite: {fileID: -2025887666, guid: fc31be5223b1a9847b5450a7ae062b62, type: 3}
+  characterLevel: 30
   maxHealth: 100
   baseDamage: 10
   moveSpeed: 5

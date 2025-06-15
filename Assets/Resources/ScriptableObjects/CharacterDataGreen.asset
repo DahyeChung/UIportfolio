@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: CharacterDataGreen
   m_EditorClassIdentifier: 
   characterName: Green
-  characterPrefab: {fileID: 7645859021009163807, guid: f8d58cfa7bb14a1c8e4af8e094793246,
+  characterPrefab: {fileID: 3990457078689199223, guid: 367f2c2655054435bc67f357d5e1cabe,
     type: 3}
-  characterSprite: {fileID: 21300000, guid: f8372b4ba4f5a9a49b80a67d326ad156, type: 3}
+  characterSprite: {fileID: -145582681, guid: fc31be5223b1a9847b5450a7ae062b62, type: 3}
   characterLevel: 2
   maxHealth: 100
   baseDamage: 10

@@ -110,46 +110,127 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Characters_0
+      name: Characters_6
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1596
-        height: 857
+        x: 141
+        y: 199
+        width: 200
+        height: 250
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -669, y: -229.5}
-        - {x: -669, y: 32.5}
-        - {x: -478, y: 41.5}
-        - {x: -455, y: -222.5}
-      - - {x: -451, y: -237.5}
-        - {x: -451, y: 80.5}
-        - {x: -243, y: 80.5}
-        - {x: -243, y: -237.5}
-      - - {x: -182, y: -204.5}
-        - {x: -182, y: 54.5}
-        - {x: -43, y: 54.5}
-        - {x: -43, y: -204.5}
-      - - {x: 15, y: -272.5}
-        - {x: 15, y: 52.5}
-        - {x: 177, y: 52.5}
-        - {x: 177, y: -272.5}
-      - - {x: 218, y: -253.5}
-        - {x: 218, y: 25.5}
-        - {x: 379, y: 25.5}
-        - {x: 379, y: -253.5}
-      - - {x: 456, y: -255.5}
-        - {x: 456, y: 44.5}
-        - {x: 620, y: 44.5}
-        - {x: 620, y: -255.5}
+      outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 424ecd7ce1e5b7746bb6d205f24ca81b
-      internalID: -1056349365
+      spriteID: a7e160d21d6b23140a9d4f73bb40f001
+      internalID: -13046208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters_7
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 199
+        width: 200
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dad0cf2ee8f8b3b41b404c61a4e1ad45
+      internalID: -253991576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters_8
+      rect:
+        serializedVersion: 2
+        x: 565
+        y: 199
+        width: 200
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d47dd545c9fa3c4d86117c53ab03424
+      internalID: -145582681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters_9
+      rect:
+        serializedVersion: 2
+        x: 777
+        y: 199
+        width: 200
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc69f2838953dd84d9a3267d33795b58
+      internalID: 50199571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters_10
+      rect:
+        serializedVersion: 2
+        x: 989
+        y: 199
+        width: 200
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 865049f64e9d3c146a85776fc1da5a55
+      internalID: -2025887666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters_11
+      rect:
+        serializedVersion: 2
+        x: 1201
+        y: 199
+        width: 200
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e41d5c4a6f51b74485e9864406e0d9a
+      internalID: 864952535
       vertices: []
       indices: 
       edges: []
@@ -166,6 +247,17 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       Characters_0: -1056349365
+      Characters_1: -2077878539
+      Characters_10: -2025887666
+      Characters_11: 864952535
+      Characters_2: 1831014913
+      Characters_3: -634778059
+      Characters_4: -1038892924
+      Characters_5: -1402557267
+      Characters_6: -13046208
+      Characters_7: -253991576
+      Characters_8: -145582681
+      Characters_9: 50199571
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f85a6fd6de30ddc45a9578b78f0d671c, type: 3}
   m_Name: CharacterDataYellow
   m_EditorClassIdentifier: 
-  characterName: Yello
-  characterPrefab: {fileID: 2419043527781987115, guid: 04ad7a4893ba4441806944615e79c043,
+  characterName: Yellow
+  characterPrefab: {fileID: 8230766273605467533, guid: 413a1d22819f431ebb3ff91a05364000,
     type: 3}
-  characterSprite: {fileID: 21300000, guid: f8372b4ba4f5a9a49b80a67d326ad156, type: 3}
+  characterSprite: {fileID: 50199571, guid: fc31be5223b1a9847b5450a7ae062b62, type: 3}
   characterLevel: 0
   maxHealth: 100
   baseDamage: 10

@@ -16,7 +16,7 @@ public class CharacterSelectionManager : MonoBehaviour
 
     [Header("UI References")]
     [Tooltip("The parent object where character UI cards will be instantiated.")]
-    public Transform cardParent;
+    public Transform cardParent; // content box
 
     [Tooltip("The UI prefab for displaying a single character's info.")]
     public GameObject characterCardPrefab;
@@ -43,7 +43,7 @@ public class CharacterSelectionManager : MonoBehaviour
         // Select the first character by default
         if (allCharacters.Count > 0)
         {
-            SelectCharacter(0);
+            SelectCharacter(0); // 기본값 1번 SO
         }
     }
 
@@ -52,6 +52,7 @@ public class CharacterSelectionManager : MonoBehaviour
     /// </summary>
     private void PopulateCharacterCards()
     {
+        // 캐릭터 선택란 컨텐츠 박스에 캐릭터UI카드를 생성하는 작업 
         for (int i = 0; i < allCharacters.Count; i++)
         {
             GameObject cardGO = Instantiate(characterCardPrefab, cardParent);
@@ -68,6 +69,7 @@ public class CharacterSelectionManager : MonoBehaviour
     /// <param name="index">The index of the character in the allCharacters list.</param>
     public void SelectCharacter(int index)
     {
+        // 인텍스가 현재 등록한 SO 캐릭터 갯수와 맞지 않으면 에러처리 인텍스 활용은 어떻게 하는가는 확인요마ㅐㅇ
         if (index < 0 || index >= allCharacters.Count)
         {
             Debug.LogError("Invalid character index selected.");
