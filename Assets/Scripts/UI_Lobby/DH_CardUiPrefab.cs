@@ -19,8 +19,6 @@ public class DH_CardUiPrefab : MonoBehaviour
 
     public void SetCardDetail(CharacterData data, DH_CharacterSelectionManager i_characterSelectionManager)
     {
-
-
         characterData = data;
         spriteImage.sprite = characterData.characterSprite;
 

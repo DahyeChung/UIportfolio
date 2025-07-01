@@ -12,12 +12,13 @@ public class CharacterData : ScriptableObject
     [Tooltip("The icon to display in the character selection UI.")]
     public Sprite characterSprite;
 
+
+
     [Header("Base Stats")]
     public int characterLevel;
     public float maxHealth = 100f;
     public float baseDamage = 10f;
     public float moveSpeed = 5f;
-
 
 
     [Header("Description")]
