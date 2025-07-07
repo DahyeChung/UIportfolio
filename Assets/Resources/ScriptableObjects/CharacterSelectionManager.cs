@@ -66,7 +66,7 @@ public class CharacterSelectionManager : MonoBehaviour
     /// <summary>
     /// This method is called by CharacterCardUI when a card is clicked.
     /// </summary>
-    /// <param name="index">The index of the character in the allCharacters list.</param>
+    /// <param _name="index">The index of the character in the allCharacters list.</param>
     public void SelectCharacter(int index)
     {
         // 인텍스가 현재 등록한 SO 캐릭터 갯수와 맞지 않으면 에러처리 인텍스 활용은 어떻게 하는가는 확인요마ㅐㅇ
@@ -110,7 +110,7 @@ public class CharacterSelectionManager : MonoBehaviour
         // GameDataManager.Instance.SetSelectedCharacter(allCharacters[selectedCharacterIndex]);
 
         // Load your main game scene (make sure it's in your Build Settings)
-        // SceneManager.LoadScene("MainGameScene"); // Change "MainGameScene" to your actual scene name
+        // SceneManager.LoadScene("MainGameScene"); // Change "MainGameScene" to your actual scene _name
         Debug.Log("Selected Character" + allCharacters[selectedCharacterIndex].characterName);
     }
 }

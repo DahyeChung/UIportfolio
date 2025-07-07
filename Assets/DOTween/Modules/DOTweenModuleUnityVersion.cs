@@ -1,4 +1,4 @@
-﻿// Author: Daniele Giardini - http://www.demigiant.com
+// Author: Daniele Giardini - http://www.demigiant.com
 // Created: 2018/07/13
 
 using System;
@@ -22,7 +22,7 @@ namespace DG.Tweening
         /// <summary>Tweens a Material's color using the given gradient
         /// (NOTE 1: only uses the colors of the gradient, not the alphas - NOTE 2: creates a Sequence, not a Tweener).
         /// Also stores the image as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="gradient">The gradient to use</param><param name="duration">The duration of the tween</param>
+        /// <param _name="gradient">The gradient to use</param><param _name="duration">The duration of the tween</param>
         public static Sequence DOGradientColor(this Material target, Gradient gradient, float duration)
         {
             Sequence s = DOTween.Sequence();
@@ -44,9 +44,9 @@ namespace DG.Tweening
         /// <summary>Tweens a Material's named color property using the given gradient
         /// (NOTE 1: only uses the colors of the gradient, not the alphas - NOTE 2: creates a Sequence, not a Tweener).
         /// Also stores the image as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="gradient">The gradient to use</param>
-        /// <param name="property">The name of the material property to tween (like _Tint or _SpecColor)</param>
-        /// <param name="duration">The duration of the tween</param>
+        /// <param _name="gradient">The gradient to use</param>
+        /// <param _name="property">The _name of the material property to tween (like _Tint or _SpecColor)</param>
+        /// <param _name="duration">The duration of the tween</param>
         public static Sequence DOGradientColor(this Material target, Gradient gradient, string property, float duration)
         {
             Sequence s = DOTween.Sequence();
@@ -121,7 +121,7 @@ namespace DG.Tweening
         /// It can be used inside a coroutine as a yield.
         /// <para>Example usage:</para><code>yield return myTween.WaitForElapsedLoops(2);</code>
         /// </summary>
-        /// <param name="elapsedLoops">Elapsed loops to wait for</param>
+        /// <param _name="elapsedLoops">Elapsed loops to wait for</param>
         public static CustomYieldInstruction WaitForElapsedLoops(this Tween t, int elapsedLoops, bool returnCustomYieldInstruction)
         {
             if (!t.active) {
@@ -136,7 +136,7 @@ namespace DG.Tweening
         /// It can be used inside a coroutine as a yield.
         /// <para>Example usage:</para><code>yield return myTween.WaitForPosition(2.5f);</code>
         /// </summary>
-        /// <param name="position">Position (loops included, delays excluded) to wait for</param>
+        /// <param _name="position">Position (loops included, delays excluded) to wait for</param>
         public static CustomYieldInstruction WaitForPosition(this Tween t, float position, bool returnCustomYieldInstruction)
         {
             if (!t.active) {

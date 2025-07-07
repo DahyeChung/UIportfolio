@@ -38,7 +38,7 @@ public class SmashCSS : MonoBehaviour
         gridBG.transform.SetSiblingIndex(transform.GetSiblingIndex());
         gridBG.sizeDelta = GetComponent<RectTransform>().sizeDelta;
 
-        slotArtworkSize = playerSlotsContainer.GetChild(0).Find("artwork").GetComponent<RectTransform>().sizeDelta;
+        slotArtworkSize = playerSlotsContainer.GetChild(0).Find("_artwork").GetComponent<RectTransform>().sizeDelta;
 
         foreach (Character character in characters)
         {
@@ -54,7 +54,7 @@ public class SmashCSS : MonoBehaviour
         charCell.name = character.characterName;
 
         // 어느 컴포넌트에?
-        Image artwork = charCell.transform.Find("artwork").GetComponent<Image>();
+        Image artwork = charCell.transform.Find("_artwork").GetComponent<Image>();
         TextMeshProUGUI name = charCell.transform.Find("nameRect").GetComponentInChildren<TextMeshProUGUI>();
 
         // 어떤 정보를?
@@ -80,7 +80,7 @@ public class SmashCSS : MonoBehaviour
         // 컨텐츠 박스에서 해당 플레이어의 이미지와 아이콘을 Find 하여 각각 애니메이션 지정
         Transform slot = playerSlotsContainer.GetChild(player);
 
-        Transform slotArtwork = slot.Find("artwork");
+        Transform slotArtwork = slot.Find("_artwork");
         Transform slotIcon = slot.Find("icon");
 
 
@@ -115,7 +115,7 @@ public class SmashCSS : MonoBehaviour
             slotArtwork.GetComponent<RectTransform>().sizeDelta = slotArtworkSize;
             slotArtwork.GetComponent<RectTransform>().sizeDelta *= character.zoom;
         }
-        slot.Find("name").GetComponent<TextMeshProUGUI>().text = name;
+        slot.Find("_name").GetComponent<TextMeshProUGUI>().text = name;
         slot.Find("player").GetComponentInChildren<TextMeshProUGUI>().text = playernickname;
         slot.Find("iconAndPx").GetComponentInChildren<TextMeshProUGUI>().text = playernumber;
         #endregion

@@ -45,7 +45,7 @@ public class DH_CharacterSelectionManager : MonoBehaviour
     public void UpdateSelectedCharacter(CharacterData data)
     {
 
-        // update character level and name
+        // update character level and _name
         currentSelectedCard = data;
         characterLevelText.text = currentSelectedCard.characterLevel.ToString();
         characterNameText.text = currentSelectedCard.characterName;

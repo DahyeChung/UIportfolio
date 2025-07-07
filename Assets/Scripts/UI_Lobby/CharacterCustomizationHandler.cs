@@ -28,9 +28,9 @@ public class CharacterCustomizationHandler : MonoBehaviour
      * Name of the items in string for UI description
      * Icon of the items in sprite
      * Character prefeb Hold all item class in List 
-     * Manually add the items icons and name for each List item classes
+     * Manually add the items icons and _name for each List item classes
      * 
-     * On Customization create enabled instantiate equipment cards (name, icon, object reference)
+     * On Customization create enabled instantiate equipment cards (_name, icon, object reference)
      * In scroll view content 
      * for each item of the list
      *

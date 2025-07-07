@@ -13,18 +13,21 @@ public class Smash_UIManager : MonoBehaviour
     private Smash_PlayerSlot playerSlot;
     public GameObject playerSlotPrefab;
     public Transform playerParent;
-    public int playerCount = 4;
+    private int playerCount = 4;
     // private List<Smash_PlayerSlot> playerSlots = new List<Smash_PlayerSlot>();
     // private int currentPlayerIndex = 0;
 
     private void OnEnable()
     {
         Smash_CharacterCard.OnCharacterSelected += OnCharcterSelected;
+        Smash_CharacterCard.OnCharacterEntered += ShowHoverEffect;
     }
 
     private void OnDisable()
     {
         Smash_CharacterCard.OnCharacterSelected -= OnCharcterSelected;
+        Smash_CharacterCard.OnCharacterEntered -= ShowHoverEffect;
+
     }
 
     private void Start()
@@ -32,9 +35,10 @@ public class Smash_UIManager : MonoBehaviour
         CreateCards();
         CreatePlayerSlot();
     }
+
+    // Make cards from scriptable object and set information
     void CreateCards()
     {
-        // 카드 프리팹 생성 및 SO 정보 넘겨주는 일 까지만 
         foreach (Character character in characterSO)
         {
             GameObject cardObj = Instantiate(charPrefab, charParent);
@@ -48,11 +52,12 @@ public class Smash_UIManager : MonoBehaviour
 
     void CreatePlayerSlot()
     {
+        #region Multi Player Selection
         //// 주의 추후에 플레이어 인원이 변경 시 상응 가능하게 
         //for (int i = 0; i < playerCount; i++)
         //{
         //    GameObject slotObj = Instantiate(playerSlotPrefab, playerParent);
-        //    slotObj.name = "player" + (i + 1);
+        //    slotObj._name = "player" + (i + 1);
 
         //    Smash_CharacterCard cardView = slotObj.AddComponent<Smash_CharacterCard>(); // 스크립트 연결 
 
@@ -60,16 +65,21 @@ public class Smash_UIManager : MonoBehaviour
 
         //}
 
+        #endregion
+
+        // Single Player 
         GameObject slotObj = Instantiate(playerSlotPrefab, playerParent);
         slotObj.name = "Player 1";
         playerSlot = slotObj.GetComponent<Smash_PlayerSlot>();
     }
 
-    // 캐릭터가 선택되었을 때 캐릭터 카드 정보를 플레이어 슬랏 정보에 연결 
-    void OnCharcterSelected(Character selectedCharacter) // event
+    void OnCharcterSelected(Character selectedCharacter)
     {
         playerSlot.SetInfo(selectedCharacter);
     }
 
-
+    void ShowHoverEffect(Character selectedCharacter)
+    {
+        playerSlot.HoverEffect(selectedCharacter);
+    }
 }

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class CharacterCardUI : MonoBehaviour
 {
     [Header("UI Element References")]
-    // public TextMeshProUGUI nameText;
+    // public TextMeshProUGUI _nameText;
     public Image iconImage;
     public Button selectButton;
 
@@ -24,7 +24,7 @@ public class CharacterCardUI : MonoBehaviour
         manager = selectionManager;
         characterIndex = index;
 
-        // nameText.text = data.characterName;
+        // _nameText.text = data.characterName;
         iconImage.sprite = data.characterSprite;
 
         // Add a listener to the button's onClick event

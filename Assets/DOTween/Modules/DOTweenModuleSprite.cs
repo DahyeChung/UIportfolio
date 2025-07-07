@@ -1,4 +1,4 @@
-﻿// Author: Daniele Giardini - http://www.demigiant.com
+// Author: Daniele Giardini - http://www.demigiant.com
 // Created: 2018/07/13
 
 #if true && (UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5 || UNITY_2017_1_OR_NEWER) // MODULE_MARKER
@@ -17,7 +17,7 @@ namespace DG.Tweening
 
         /// <summary>Tweens a SpriteRenderer's color to the given value.
         /// Also stores the spriteRenderer as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param _name="endValue">The end value to reach</param><param _name="duration">The duration of the tween</param>
         public static Tweener DOColor(this SpriteRenderer target, Color endValue, float duration)
         {
             return DOTween.To(() => target.color, x => target.color = x, endValue, duration).SetTarget(target);
@@ -25,7 +25,7 @@ namespace DG.Tweening
 
         /// <summary>Tweens a Material's alpha color to the given value.
         /// Also stores the spriteRenderer as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param _name="endValue">The end value to reach</param><param _name="duration">The duration of the tween</param>
         public static Tweener DOFade(this SpriteRenderer target, float endValue, float duration)
         {
             return DOTween.ToAlpha(() => target.color, x => target.color = x, endValue, duration)
@@ -35,7 +35,7 @@ namespace DG.Tweening
         /// <summary>Tweens a SpriteRenderer's color using the given gradient
         /// (NOTE 1: only uses the colors of the gradient, not the alphas - NOTE 2: creates a Sequence, not a Tweener).
         /// Also stores the image as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="gradient">The gradient to use</param><param name="duration">The duration of the tween</param>
+        /// <param _name="gradient">The gradient to use</param><param _name="duration">The duration of the tween</param>
         public static Sequence DOGradientColor(this SpriteRenderer target, Gradient gradient, float duration)
         {
             Sequence s = DOTween.Sequence();
@@ -65,7 +65,7 @@ namespace DG.Tweening
         /// in a way that allows other DOBlendableColor tweens to work together on the same target,
         /// instead than fight each other as multiple DOColor would do.
         /// Also stores the SpriteRenderer as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="endValue">The value to tween to</param><param name="duration">The duration of the tween</param>
+        /// <param _name="endValue">The value to tween to</param><param _name="duration">The duration of the tween</param>
         public static Tweener DOBlendableColor(this SpriteRenderer target, Color endValue, float duration)
         {
             endValue = endValue - target.color;
