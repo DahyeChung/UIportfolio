@@ -8,11 +8,16 @@ public class Smash_UIManager : MonoBehaviour
     public Transform charParent;
     public GameObject charPrefab;
 
+    public GameObject playerSlot;
+    public Transform playerParent;
+    public int playerCount = 5;
+
+
     private void Start()
     {
         // 캐릭터 카드 갯수 관리 
         CreateCards();
-
+        CreatePlayerCards();
     }
     void CreateCards()
     {
@@ -26,13 +31,30 @@ public class Smash_UIManager : MonoBehaviour
             GameObject cards = Instantiate(charPrefab, charParent);
             cards.name = character.characterName;
 
-            Smash_UICharacterSelection cardView = cards.GetComponent<Smash_UICharacterSelection>();
-            if (cardView != null)
-                cardView = cards.AddComponent<Smash_UICharacterSelection>();
+            Smash_UICharacterSelection cardView = cards.AddComponent<Smash_UICharacterSelection>(); // 스크립트 연결 
 
-            cardView.SetInfo(character);
+
+            cardView.SetCardInfo(character);
+
 
         }
+    }
+
+    void CreatePlayerCards()
+    {
+        // 주의 추후에 플레이어 인원이 변경 시 상응 가능하게 
+        for (int i = 1; i < playerCount; i++)
+        {
+            GameObject playerCards = Instantiate(playerSlot, playerParent);
+            playerCards.name = "player" + i.ToString();
+
+            Smash_UICharacterSelection cardView = playerCards.AddComponent<Smash_UICharacterSelection>(); // 스크립트 연결 
+
+
+
+        }
+
+
     }
 
 }

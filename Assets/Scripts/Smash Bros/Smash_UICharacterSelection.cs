@@ -5,38 +5,43 @@ using UnityEngine.UI;
 // UI 표시와 데이터 바인딩 
 public class Smash_UICharacterSelection : MonoBehaviour
 {
-    private Smash_UIManager characterManager;
-
-    [Header("Images")]
-    private Sprite _optionImage;
-    private Sprite _selectedImage;
-
-    [Header("Texts")]
-    private TextMeshProUGUI _optionName;
-    private TextMeshProUGUI _selectedName;
-
-    void Start()
-    {
-
-    }
 
 
     // Data Bindind of Scriptable Object & UI cards
     // charPrefab 카드 정보세팅에만 사용 가능 
     // 호출될 때 
-    public void SetInfo(Character characterData)
+    public void SetCardInfo(Character characterData)
     {
         Image artwork = transform.Find("artwork").GetComponent<Image>();
-        TextMeshPro nameText = transform.Find("nameText").GetComponent<TextMeshPro>();
+        TextMeshProUGUI nameText = transform.Find("nameRect").GetComponentInChildren<TextMeshProUGUI>();
 
-        if (artwork || nameText == null)
+        if (artwork == null || nameText == null)
         {
-            Debug.Log("Missing UI element: not found in prefab");
+            Debug.LogError("Missing UI element: 'artwork' or 'nameText' not found in prefab.");
             return;
         }
 
         artwork.sprite = characterData.characterSprite;
         nameText.text = characterData.characterName;
+
+        artwork.GetComponent<RectTransform>().pivot = uiPivot(artwork.sprite);
+        artwork.GetComponent<RectTransform>().sizeDelta *= characterData.zoom;
+
+        Button selectButton;
+        selectButton = GetComponent<Button>();
+        selectButton.onClick.AddListener(OnCardClick);
+        //  selectButton.OnPointerEnter.AddListener(OnCardHover);
+    }
+
+    public Vector2 uiPivot(Sprite sprite)
+    {
+        Vector2 pixelSize = new Vector2(sprite.texture.width, sprite.texture.height);
+        Vector2 pixelPivot = sprite.pivot;
+        return new Vector2(pixelPivot.x / pixelSize.x, pixelPivot.y / pixelSize.y);
+    }
+    public void SetPlayerInfo(Character characterData)
+    {
+
     }
 
     void OnCardHover()
@@ -45,13 +50,21 @@ public class Smash_UICharacterSelection : MonoBehaviour
         // 플레이어 칸의 이미지,이름 변경
         // **주의, Create Card 와 Set Info 함수가 실행된 이후에만 실행해야함
     }
+    // 카드 클릭 감지 
     void OnCardClick()
     {
+        Debug.Log("클릭됨");
+
         // 클릭 시 P1 아이콘 커서 위치에 고정시키고 
         // 플레이어 칸의 이미지 이름 고정
         // **주의, Create Card 와 Set Info 함수가 실행된 이후에만 실행해야함
 
     }
+
+
+
+
+
 
 }
 
