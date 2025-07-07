@@ -1,17 +1,21 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 // UI 표시와 데이터 바인딩 
-public class Smash_UICharacterSelection : MonoBehaviour
+public class Smash_CharacterCard : MonoBehaviour
 {
+    public static event Action<Character> OnCharacterSelected;
+    private Character characterData;
+
 
 
     // Data Bindind of Scriptable Object & UI cards
-    // charPrefab 카드 정보세팅에만 사용 가능 
-    // 호출될 때 
-    public void SetCardInfo(Character characterData)
+    public void SetCardInfo(Character data)
     {
+        characterData = data;
+
         Image artwork = transform.Find("artwork").GetComponent<Image>();
         TextMeshProUGUI nameText = transform.Find("nameRect").GetComponentInChildren<TextMeshProUGUI>();
 
@@ -30,7 +34,6 @@ public class Smash_UICharacterSelection : MonoBehaviour
         Button selectButton;
         selectButton = GetComponent<Button>();
         selectButton.onClick.AddListener(OnCardClick);
-        //  selectButton.OnPointerEnter.AddListener(OnCardHover);
     }
 
     public Vector2 uiPivot(Sprite sprite)
@@ -41,8 +44,9 @@ public class Smash_UICharacterSelection : MonoBehaviour
     }
     public void SetPlayerInfo(Character characterData)
     {
-
+        // 슬롯 UI 갱신 
     }
+
 
     void OnCardHover()
     {
@@ -53,7 +57,8 @@ public class Smash_UICharacterSelection : MonoBehaviour
     // 카드 클릭 감지 
     void OnCardClick()
     {
-        Debug.Log("클릭됨");
+        Debug.Log($"{characterData.characterName} 카드 클릭됨");
+        OnCharacterSelected?.Invoke(characterData); // 버튼 클릭 시 On Character Selected 이벤트 발생 
 
         // 클릭 시 P1 아이콘 커서 위치에 고정시키고 
         // 플레이어 칸의 이미지 이름 고정
