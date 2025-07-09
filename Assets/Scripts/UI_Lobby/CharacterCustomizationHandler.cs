@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterCustomizationHandler : MonoBehaviour
+public class CharacterCustomizationHandler
+    : MonoBehaviour
 {
     private GameObject displayedCharacter;
 
