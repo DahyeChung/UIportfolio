@@ -4,6 +4,8 @@ using UnityEngine;
 public class CharacterCustomizationHandler : MonoBehaviour
 {
     private GameObject displayedCharacter;
+
+    [SerializeField]
     private DH_CharacterSelectionManager characterSelectionManager;
 
 
@@ -18,6 +20,7 @@ public class CharacterCustomizationHandler : MonoBehaviour
 
     private void Start()
     {
+        characterSelectionManager = FindObjectOfType<DH_CharacterSelectionManager>();
         displayedCharacter = characterSelectionManager.characterPrefab;
     }
 

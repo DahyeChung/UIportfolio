@@ -9374,6 +9374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 647bc774cf57d1e4ca62e4d8c9400dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterSelectionManager: {fileID: 0}
   characterEquipments:
   - bodyPartsEnable: {fileID: 1368552640164109914}
     bodyPartName: 
@@ -9390,6 +9391,7 @@ MonoBehaviour:
   - bodyPartsEnable: {fileID: 2877079719622420040}
     bodyPartName: 
     bodyPartIcon: {fileID: 0}
+  charaterEyes: []
 --- !u!1 &6328056557323977528
 GameObject:
   m_ObjectHideFlags: 0
