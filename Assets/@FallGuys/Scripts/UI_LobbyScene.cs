@@ -39,53 +39,6 @@ public class UI_LobbyScene : UI_Base
     private UI_ShopPopup _shopPopup;
     private UI_CreativePopup _creativePopup;
 
-    protected void Awake()
-    {
-
-
-
-    }
-    private void Start()
-    {
-        Init();
-        ToggleInit();
-    }
-
-    void Init()
-    {
-        _homePopup = Managers.UI.ShowPopupUI<UI_HomePopup>();
-        _customizePopup = Managers.UI.ShowPopupUI<UI_CustomizationPopup>();
-        _famePopup = Managers.UI.ShowPopupUI<UI_FamePassPopup>();
-        _shopPopup = Managers.UI.ShowPopupUI<UI_ShopPopup>();
-        _settingPopup = Managers.UI.ShowPopupUI<UI_SettingPopup>();
-        _creativePopup = Managers.UI.ShowPopupUI<UI_CreativePopup>();
-
-        HomeToggle.group = menuGroup;
-        CustomizeToggle.group = menuGroup;
-        CreativeToggle.group = menuGroup;
-        FamePassToggle.group = menuGroup;
-        ShopToggle.group = menuGroup;
-
-        menuGroup.allowSwitchOff = false;
-    }
-
-
-    void ToggleInit()
-    {
-        HomeToggle.isOn = true;
-        CustomizeToggle.isOn = false;
-        CreativeToggle.isOn = false;
-        FamePassToggle.isOn = false;
-        ShopToggle.isOn = false;
-
-        _homePopup.gameObject.SetActive(true);
-        _settingPopup.gameObject.SetActive(false);
-        _customizePopup.gameObject.SetActive(false);
-        _famePopup.gameObject.SetActive(false);
-        _shopPopup.gameObject.SetActive(false);
-    }
-
-
 
 
     private void OnEnable()
@@ -104,6 +57,57 @@ public class UI_LobbyScene : UI_Base
         FamePassToggle.onValueChanged.RemoveListener(OnClickFamePassToggle);
         ShopToggle.onValueChanged.RemoveListener(OnClickShopToggle);
     }
+
+    private void Start()
+    {
+
+    }
+    public override bool Init()
+    {
+        if (base.Init() == false)
+            return false;
+
+        _homePopup = Managers.UI.ShowPopupUI<UI_HomePopup>();
+        _customizePopup = Managers.UI.ShowPopupUI<UI_CustomizationPopup>();
+        _famePopup = Managers.UI.ShowPopupUI<UI_FamePassPopup>();
+        _shopPopup = Managers.UI.ShowPopupUI<UI_ShopPopup>();
+        _settingPopup = Managers.UI.ShowPopupUI<UI_SettingPopup>();
+        _creativePopup = Managers.UI.ShowPopupUI<UI_CreativePopup>();
+
+        HomeToggle.group = menuGroup;
+        CustomizeToggle.group = menuGroup;
+        CreativeToggle.group = menuGroup;
+        FamePassToggle.group = menuGroup;
+        ShopToggle.group = menuGroup;
+
+        menuGroup.allowSwitchOff = false;
+        Debug.Log("Lobby Scene Initialized");
+        ToggleInit();
+
+
+        return true;
+
+    }
+
+
+    void ToggleInit()
+    {
+
+        HomeToggle.isOn = true;
+        CustomizeToggle.isOn = false;
+        CreativeToggle.isOn = false;
+        FamePassToggle.isOn = false;
+        ShopToggle.isOn = false;
+
+        _homePopup.gameObject.SetActive(true);
+        _settingPopup.gameObject.SetActive(false);
+        _customizePopup.gameObject.SetActive(false);
+        _famePopup.gameObject.SetActive(false);
+        _shopPopup.gameObject.SetActive(false);
+        Debug.Log("Toggle Initialized");
+    }
+
+
 
     public void SetInfo()
     {

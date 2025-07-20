@@ -3,8 +3,20 @@ using UnityEngine;
 
 public class UI_Base : MonoBehaviour
 {
-    // 데이터 바인딩 
+    protected bool _init = false;
 
+    public virtual bool Init()
+    {
+        if (_init)
+            return false;
+
+        _init = true;
+        return true;
+    }
+    private void Start()
+    {
+        Init();
+    }
 
 
     public void PopupOpenAnimation(GameObject contentObject)

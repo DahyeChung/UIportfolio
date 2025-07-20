@@ -17,7 +17,7 @@ public class Managers : MonoBehaviour
         GameObject go = new GameObject { name = "@Managers" };
         _instance = go.AddComponent<Managers>();
         DontDestroyOnLoad(go);
-
+        Debug.Log("Managers initialized.");
     }
 
     // Managers.Instance에 접근할 때마다 Init() 이 Awake 보다 먼저 호출되어 Find(@Managers)의 작업을 허용하지 않음.
