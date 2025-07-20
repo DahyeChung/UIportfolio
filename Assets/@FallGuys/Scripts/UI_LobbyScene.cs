@@ -39,7 +39,11 @@ public class UI_LobbyScene : UI_Base
     private UI_ShopPopup _shopPopup;
     private UI_CreativePopup _creativePopup;
 
+    private void Awake()
+    {
+        Debug.Log("Awake");
 
+    }
 
     private void OnEnable()
     {
@@ -60,12 +64,12 @@ public class UI_LobbyScene : UI_Base
 
     private void Start()
     {
-
+        Debug.Log("Start");
+        Init();
+        Debug.Log("UI_LobbyScene Initialized");
     }
-    public override bool Init()
+    void Init()
     {
-        if (base.Init() == false)
-            return false;
 
         _homePopup = Managers.UI.ShowPopupUI<UI_HomePopup>();
         _customizePopup = Managers.UI.ShowPopupUI<UI_CustomizationPopup>();
@@ -85,9 +89,35 @@ public class UI_LobbyScene : UI_Base
         ToggleInit();
 
 
-        return true;
+
 
     }
+    //public override bool Init()
+    //{
+    //    if (base.Init() == false)
+    //        return false;
+
+    //    _homePopup = Managers.UI.ShowPopupUI<UI_HomePopup>();
+    //    _customizePopup = Managers.UI.ShowPopupUI<UI_CustomizationPopup>();
+    //    _famePopup = Managers.UI.ShowPopupUI<UI_FamePassPopup>();
+    //    _shopPopup = Managers.UI.ShowPopupUI<UI_ShopPopup>();
+    //    _settingPopup = Managers.UI.ShowPopupUI<UI_SettingPopup>();
+    //    _creativePopup = Managers.UI.ShowPopupUI<UI_CreativePopup>();
+
+    //    HomeToggle.group = menuGroup;
+    //    CustomizeToggle.group = menuGroup;
+    //    CreativeToggle.group = menuGroup;
+    //    FamePassToggle.group = menuGroup;
+    //    ShopToggle.group = menuGroup;
+
+    //    menuGroup.allowSwitchOff = false;
+    //    Debug.Log("Lobby Scene Initialized");
+    //    ToggleInit();
+
+
+    //    return true;
+
+    //}
 
 
     void ToggleInit()
