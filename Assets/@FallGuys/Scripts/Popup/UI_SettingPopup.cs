@@ -1,4 +1,4 @@
-public class UI_FamePassPopup : UI_Popup
+public class UI_SettingPopup : UI_Popup
 {
     // Start is called before the first frame update
     void Start()
