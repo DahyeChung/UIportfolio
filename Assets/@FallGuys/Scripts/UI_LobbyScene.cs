@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_LobbyScene : MonoBehaviour
+public class UI_LobbyScene : UI_Base
 {
+
     #region Enum
     private enum GameObjects
     {
@@ -21,65 +22,87 @@ public class UI_LobbyScene : MonoBehaviour
         FamePassToggle,
         ShopToggle,
     }
-
-
     #endregion
-    public ToggleGroup menuGroup;
 
     [Header("메뉴 토글")]
+    public ToggleGroup menuGroup;
     public Toggle HomeToggle;
     public Toggle CustomizeToggle;
     public Toggle CreativeToggle;
     public Toggle FamePassToggle;
     public Toggle ShopToggle;
 
-    UI_SettingPopup settingPopup = Managers.UI.ShowPopupUI<UI_SettingPopup>();
-    UI_HomePopup homePopup = Managers.UI.ShowPopupUI<UI_HomePopup>();
-    UI_CustomizationPopup customizePopup = Managers.UI.ShowPopupUI<UI_CustomizationPopup>();
-    UI_FamePassPopup famePopup = Managers.UI.ShowPopupUI<UI_FamePassPopup>();
-    UI_ShopPopup shopPopup = Managers.UI.ShowPopupUI<UI_ShopPopup>();
+    private UI_SettingPopup _settingPopup;
+    private UI_HomePopup _homePopup;
+    private UI_CustomizationPopup _customizePopup;
+    private UI_FamePassPopup _famePopup;
+    private UI_ShopPopup _shopPopup;
+    private UI_CreativePopup _creativePopup;
 
-    private void ToggleInit()
-    {
-        // menu group 이라는 오브젝트를 찾아서 
-        // 하위에 있는 
-
-    }
     protected void Awake()
     {
-        HomeToggle.group = menuGroup;
-        CustomizeToggle.group = menuGroup;
-        CreativeToggle.group = menuGroup;
-        FamePassToggle.group = menuGroup;
-        ShopToggle.group = menuGroup;
-
-        //
-        menuGroup.allowSwitchOff = false;
-
-
-
-        // Enum & 함수 바인딩
-        CustomizeToggle.onValueChanged.AddListener(OnClickCustomizeToggle);
-        CreativeToggle.onValueChanged.AddListener(OnClickCreativeToggle);
-        FamePassToggle.onValueChanged.AddListener(OnClickFamePassToggle);
-        ShopToggle.onValueChanged.AddListener(OnClickShopToggle);
-        HomeToggle.onValueChanged.AddListener(OnClickHomeToggle);
 
 
 
     }
     private void Start()
     {
-        HomeToggle.isOn = true;
+        Init();
+        ToggleInit();
     }
+
+    void Init()
+    {
+        _homePopup = Managers.UI.ShowPopupUI<UI_HomePopup>();
+        _customizePopup = Managers.UI.ShowPopupUI<UI_CustomizationPopup>();
+        _famePopup = Managers.UI.ShowPopupUI<UI_FamePassPopup>();
+        _shopPopup = Managers.UI.ShowPopupUI<UI_ShopPopup>();
+        _settingPopup = Managers.UI.ShowPopupUI<UI_SettingPopup>();
+        _creativePopup = Managers.UI.ShowPopupUI<UI_CreativePopup>();
+
+        HomeToggle.group = menuGroup;
+        CustomizeToggle.group = menuGroup;
+        CreativeToggle.group = menuGroup;
+        FamePassToggle.group = menuGroup;
+        ShopToggle.group = menuGroup;
+
+        menuGroup.allowSwitchOff = false;
+    }
+
+
+    void ToggleInit()
+    {
+        HomeToggle.isOn = true;
+        CustomizeToggle.isOn = false;
+        CreativeToggle.isOn = false;
+        FamePassToggle.isOn = false;
+        ShopToggle.isOn = false;
+
+        _homePopup.gameObject.SetActive(true);
+        _settingPopup.gameObject.SetActive(false);
+        _customizePopup.gameObject.SetActive(false);
+        _famePopup.gameObject.SetActive(false);
+        _shopPopup.gameObject.SetActive(false);
+    }
+
+
+
 
     private void OnEnable()
     {
-        // 이벤트 리스너 구독
+        HomeToggle.onValueChanged.AddListener(OnClickHomeToggle);
+        CustomizeToggle.onValueChanged.AddListener(OnClickCustomizeToggle);
+        CreativeToggle.onValueChanged.AddListener(OnClickCreativeToggle);
+        FamePassToggle.onValueChanged.AddListener(OnClickFamePassToggle);
+        ShopToggle.onValueChanged.AddListener(OnClickShopToggle);
     }
     private void OnDisable()
     {
-        // 이벤트 리스너 구독 해제
+        HomeToggle.onValueChanged.RemoveListener(OnClickHomeToggle);
+        CustomizeToggle.onValueChanged.RemoveListener(OnClickCustomizeToggle);
+        CreativeToggle.onValueChanged.RemoveListener(OnClickCreativeToggle);
+        FamePassToggle.onValueChanged.RemoveListener(OnClickFamePassToggle);
+        ShopToggle.onValueChanged.RemoveListener(OnClickShopToggle);
     }
 
     public void SetInfo()
@@ -90,46 +113,36 @@ public class UI_LobbyScene : MonoBehaviour
     #region Click Event
     void OnClickSettingButton(bool isOn)
     {
-        if (!isOn) return;
-        SetActiveOnly(settingPopup);
+        if (isOn) SetActiveOnly(_settingPopup);
     }
-
-
-
-    void OnClickHomeToggle(bool isOn)
+    private void OnClickHomeToggle(bool isOn)
     {
-        if (!isOn) return;
-        SetActiveOnly(homePopup);
+        if (isOn) SetActiveOnly(_homePopup);
     }
-    void OnClickCustomizeToggle(bool isOn)
+    private void OnClickCustomizeToggle(bool isOn)
     {
-        if (!isOn) return;
-        SetActiveOnly(customizePopup);
+        if (isOn) SetActiveOnly(_customizePopup);
     }
-    void OnClickCreativeToggle(bool isOn)
+    private void OnClickCreativeToggle(bool isOn)
     {
-        if (!isOn) return;
-
+        if (isOn) SetActiveOnly(_creativePopup);
     }
-    void OnClickFamePassToggle(bool isOn)
+    private void OnClickFamePassToggle(bool isOn)
     {
-        if (!isOn) return;
-        SetActiveOnly(famePopup);
+        if (isOn) SetActiveOnly(_famePopup);
     }
-    void OnClickShopToggle(bool isOn)
+    private void OnClickShopToggle(bool isOn)
     {
-        if (!isOn) return;
-        SetActiveOnly(shopPopup);
+        if (isOn) SetActiveOnly(_shopPopup);
     }
     private void SetActiveOnly(MonoBehaviour popupToActivate)
     {
-        homePopup.gameObject.SetActive(homePopup == popupToActivate);
-        customizePopup.gameObject.SetActive(customizePopup == popupToActivate);
-        famePopup.gameObject.SetActive(famePopup == popupToActivate);
-        shopPopup.gameObject.SetActive(shopPopup == popupToActivate);
-        // creativePopup 등 추가 팝업이 있다면 여기 추가
+        _homePopup?.gameObject.SetActive(_homePopup == popupToActivate);
+        _customizePopup?.gameObject.SetActive(_customizePopup == popupToActivate);
+        _creativePopup?.gameObject.SetActive(_creativePopup == popupToActivate);
+        _famePopup?.gameObject.SetActive(_famePopup == popupToActivate);
+        _shopPopup?.gameObject.SetActive(_shopPopup == popupToActivate);
     }
     #endregion
 
-    // 모든 토글은 1개가 활성화 되면 나머지는 모두 비활성화 
 }

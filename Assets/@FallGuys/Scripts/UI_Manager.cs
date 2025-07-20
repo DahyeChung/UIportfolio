@@ -17,6 +17,18 @@ public class UI_Manager
             return root;
         }
     }
+
+    public T ShowSceneUI<T>(string name = null) where T : UI_Base
+    {
+        if (string.IsNullOrEmpty(name))
+            name = typeof(T).Name;
+
+        GameObject go = new GameObject { name = name };
+        T sceneUI = go.AddComponent<T>();
+        go.transform.SetParent(Root.transform);
+
+        return sceneUI;
+    }
     public T ShowPopupUI<T>(string name = null) where T : UI_Popup
     {
 
@@ -63,7 +75,6 @@ public class UI_Manager
 
         return popup;
     }
-
     public void ClosePopupUI(UI_Popup popup)
     {
         if (_popupStack.Count == 0)

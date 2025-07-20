@@ -1306,6 +1306,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03129e8a47c4a9d46a755e2a17c9e9d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuGroup: {fileID: 0}
+  HomeToggle: {fileID: 0}
+  CustomizeToggle: {fileID: 0}
+  CreativeToggle: {fileID: 0}
+  FamePassToggle: {fileID: 0}
+  ShopToggle: {fileID: 0}
 --- !u!1 &5091890144216869055
 GameObject:
   m_ObjectHideFlags: 0
