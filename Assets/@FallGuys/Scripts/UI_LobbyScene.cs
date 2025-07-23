@@ -52,6 +52,7 @@ public class UI_LobbyScene : UI_Base
         CreativeToggle.onValueChanged.AddListener(OnClickCreativeToggle);
         FamePassToggle.onValueChanged.AddListener(OnClickFamePassToggle);
         ShopToggle.onValueChanged.AddListener(OnClickShopToggle);
+
     }
     private void OnDisable()
     {
@@ -126,6 +127,7 @@ public class UI_LobbyScene : UI_Base
     private void OnClickHomeToggle(bool isOn)
     {
         if (isOn) SetActiveOnly(_homePopup);
+
     }
     private void OnClickCustomizeToggle(bool isOn)
     {
