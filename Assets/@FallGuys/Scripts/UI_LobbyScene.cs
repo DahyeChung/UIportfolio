@@ -42,7 +42,7 @@ public class UI_LobbyScene : UI_Base
     private void Awake()
     {
         Debug.Log("Awake");
-
+        Init();
     }
 
     private void OnEnable()
@@ -64,8 +64,8 @@ public class UI_LobbyScene : UI_Base
 
     private void Start()
     {
-        Debug.Log("Start");
-        Init();
+        Debug.Log("UI_LobbyScene Start");
+
         Debug.Log("UI_LobbyScene Initialized");
     }
     void Init()
@@ -92,32 +92,6 @@ public class UI_LobbyScene : UI_Base
 
 
     }
-    //public override bool Init()
-    //{
-    //    if (base.Init() == false)
-    //        return false;
-
-    //    _homePopup = Managers.UI.ShowPopupUI<UI_HomePopup>();
-    //    _customizePopup = Managers.UI.ShowPopupUI<UI_CustomizationPopup>();
-    //    _famePopup = Managers.UI.ShowPopupUI<UI_FamePassPopup>();
-    //    _shopPopup = Managers.UI.ShowPopupUI<UI_ShopPopup>();
-    //    _settingPopup = Managers.UI.ShowPopupUI<UI_SettingPopup>();
-    //    _creativePopup = Managers.UI.ShowPopupUI<UI_CreativePopup>();
-
-    //    HomeToggle.group = menuGroup;
-    //    CustomizeToggle.group = menuGroup;
-    //    CreativeToggle.group = menuGroup;
-    //    FamePassToggle.group = menuGroup;
-    //    ShopToggle.group = menuGroup;
-
-    //    menuGroup.allowSwitchOff = false;
-    //    Debug.Log("Lobby Scene Initialized");
-    //    ToggleInit();
-
-
-    //    return true;
-
-    //}
 
 
     void ToggleInit()

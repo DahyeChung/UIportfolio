@@ -4,7 +4,7 @@
 //{
 
 
-//    // Update is called once per frame
+//    // Over here popup prefabs are loaded well
 //    void Update()
 //    {
 //        if (Input.GetKeyDown(KeyCode.Alpha1)
@@ -34,13 +34,13 @@ public class TestPopup : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("Start");
         _homePopup = Managers.UI.ShowPopupUI<UI_HomePopup>();
         _customizePopup = Managers.UI.ShowPopupUI<UI_CustomizationPopup>();
         _famePopup = Managers.UI.ShowPopupUI<UI_FamePassPopup>();
         _shopPopup = Managers.UI.ShowPopupUI<UI_ShopPopup>();
-        _settingPopup = Managers.UI.ShowPopupUI<UI_SettingPopup>();
         _creativePopup = Managers.UI.ShowPopupUI<UI_CreativePopup>();
-
+        Debug.Log("Popup Initialized");
     }
 
 

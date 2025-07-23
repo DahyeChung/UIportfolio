@@ -8,7 +8,6 @@ public class Managers : MonoBehaviour
     UI_Manager _ui = new UI_Manager();
     public static UI_Manager UI { get { return Instance?._ui; } }
 
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     public static void Init()
     {
         if (_instance != null)
@@ -24,6 +23,7 @@ public class Managers : MonoBehaviour
         DontDestroyOnLoad(go);
         _instance = go.GetComponent<Managers>();
     }
+
     //public static void Init()
     //{
     //    if (_instance != null)

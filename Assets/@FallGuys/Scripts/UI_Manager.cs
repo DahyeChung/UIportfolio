@@ -45,6 +45,7 @@ public class UI_Manager
         if (string.IsNullOrEmpty(name))
         {
             name = typeof(T).Name;
+            Debug.Log($"▶ Trying to Instantiate Popup Prefab: '{name}'");
         }
 
 
