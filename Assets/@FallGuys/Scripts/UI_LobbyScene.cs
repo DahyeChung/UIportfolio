@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,6 +27,7 @@ public class UI_LobbyScene : UI_Base
 
     [Header("메뉴 토글")]
     public ToggleGroup menuGroup;
+    // public Toggle SettingToggle;
     public Toggle HomeToggle;
     public Toggle CustomizeToggle;
     public Toggle CreativeToggle;
@@ -39,6 +41,10 @@ public class UI_LobbyScene : UI_Base
     private UI_ShopPopup _shopPopup;
     private UI_CreativePopup _creativePopup;
 
+    [Header("임시")]
+    public AudioSource audioSource;
+    public AudioClip popupSfx;
+
     private void Awake()
     {
         Debug.Log("Awake");
@@ -47,6 +53,7 @@ public class UI_LobbyScene : UI_Base
 
     private void OnEnable()
     {
+        // SettingToggle.onValueChanged.AddListener(OnClickSettingButton);
         HomeToggle.onValueChanged.AddListener(OnClickHomeToggle);
         CustomizeToggle.onValueChanged.AddListener(OnClickCustomizeToggle);
         CreativeToggle.onValueChanged.AddListener(OnClickCreativeToggle);
@@ -56,6 +63,7 @@ public class UI_LobbyScene : UI_Base
     }
     private void OnDisable()
     {
+        // SettingToggle.onValueChanged.RemoveListener(OnClickSettingButton);
         HomeToggle.onValueChanged.RemoveListener(OnClickHomeToggle);
         CustomizeToggle.onValueChanged.RemoveListener(OnClickCustomizeToggle);
         CreativeToggle.onValueChanged.RemoveListener(OnClickCreativeToggle);
@@ -65,9 +73,7 @@ public class UI_LobbyScene : UI_Base
 
     private void Start()
     {
-        Debug.Log("UI_LobbyScene Start");
 
-        Debug.Log("UI_LobbyScene Initialized");
     }
     void Init()
     {
@@ -97,16 +103,17 @@ public class UI_LobbyScene : UI_Base
 
     void ToggleInit()
     {
-
         HomeToggle.isOn = true;
         CustomizeToggle.isOn = false;
         CreativeToggle.isOn = false;
         FamePassToggle.isOn = false;
         ShopToggle.isOn = false;
+        // SettingToggle.isOn = false;
 
         _homePopup.gameObject.SetActive(true);
         _settingPopup.gameObject.SetActive(false);
         _customizePopup.gameObject.SetActive(false);
+        _creativePopup.gameObject.SetActive(false);
         _famePopup.gameObject.SetActive(false);
         _shopPopup.gameObject.SetActive(false);
         Debug.Log("Toggle Initialized");
@@ -122,28 +129,45 @@ public class UI_LobbyScene : UI_Base
     #region Click Event
     void OnClickSettingButton(bool isOn)
     {
-        if (isOn) SetActiveOnly(_settingPopup);
+        if (!isOn) return;
+        SetActiveOnly(_settingPopup);
+        // ToggleEffect(SettingToggle.gameObject);
     }
     private void OnClickHomeToggle(bool isOn)
     {
-        if (isOn) SetActiveOnly(_homePopup);
-
+        if (!isOn) return;
+        SetActiveOnly(_homePopup);
+        ToggleEffect(HomeToggle.gameObject);
+        // 클릭 시 이미지 색상 바꾸기 
+        // HomeToggle.GetComponent<Image>().color = isOn ? Color.white : Color.gray;
+        // 이미지 경로를 enum으로 pint blue 선언 후 enum으로 쓰는 게 좋을 것 같은데
+        // 아니면 컬러코드로 사용?
     }
     private void OnClickCustomizeToggle(bool isOn)
     {
-        if (isOn) SetActiveOnly(_customizePopup);
+        if (!isOn) return;
+
+        SetActiveOnly(_customizePopup);
+        ToggleEffect(CustomizeToggle.gameObject);
     }
     private void OnClickCreativeToggle(bool isOn)
     {
-        if (isOn) SetActiveOnly(_creativePopup);
+        if (!isOn) return;
+        SetActiveOnly(_creativePopup);
+        ToggleEffect(CreativeToggle.gameObject);
+
     }
     private void OnClickFamePassToggle(bool isOn)
     {
-        if (isOn) SetActiveOnly(_famePopup);
+        if (!isOn) return;
+        SetActiveOnly(_famePopup);
+        ToggleEffect(FamePassToggle.gameObject);
     }
     private void OnClickShopToggle(bool isOn)
     {
-        if (isOn) SetActiveOnly(_shopPopup);
+        if (!isOn) return;
+        SetActiveOnly(_shopPopup);
+        ToggleEffect(ShopToggle.gameObject);
     }
     private void SetActiveOnly(MonoBehaviour popupToActivate)
     {
@@ -153,6 +177,16 @@ public class UI_LobbyScene : UI_Base
         _famePopup?.gameObject.SetActive(_famePopup == popupToActivate);
         _shopPopup?.gameObject.SetActive(_shopPopup == popupToActivate);
     }
-    #endregion
 
+    private void ToggleEffect(GameObject toggle)
+    {
+        toggle.transform.DOKill();
+        toggle.transform.localScale = Vector3.one;
+        toggle.transform.DOPunchScale(Vector3.one * 0.2f, 0.3f, 10, 1);
+        audioSource.PlayOneShot(popupSfx);
+
+
+    }
+
+    #endregion
 }
