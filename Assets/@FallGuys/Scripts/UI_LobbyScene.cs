@@ -45,6 +45,9 @@ public class UI_LobbyScene : UI_Base
     public AudioSource audioSource;
     public AudioClip popupSfx;
 
+    private ColorBlock toggleSelected;
+    private string colorCodeRed = "#FF0000";
+
     private void Awake()
     {
         Debug.Log("Awake");
@@ -138,10 +141,11 @@ public class UI_LobbyScene : UI_Base
         if (!isOn) return;
         SetActiveOnly(_homePopup);
         ToggleEffect(HomeToggle.gameObject);
-        // 클릭 시 이미지 색상 바꾸기 
-        // HomeToggle.GetComponent<Image>().color = isOn ? Color.white : Color.gray;
-        // 이미지 경로를 enum으로 pint blue 선언 후 enum으로 쓰는 게 좋을 것 같은데
-        // 아니면 컬러코드로 사용?
+
+        toggleSelected = HomeToggle.colors;
+        // toggleSelected.selectedColor =
+
+
     }
     private void OnClickCustomizeToggle(bool isOn)
     {
