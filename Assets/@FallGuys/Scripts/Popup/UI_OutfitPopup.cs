@@ -12,4 +12,5 @@ public class UI_OutfitPopup : UI_Popup
 
 
     }
+    // Esc 키 눌렀을 때 팝업 스택에서 제거
 }
