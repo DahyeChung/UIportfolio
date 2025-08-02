@@ -4,7 +4,7 @@ using UnityEngine;
 public class UI_Popup : MonoBehaviour
 {
     [SerializeField]
-    protected GameObject ContentsObject;
+    public GameObject ContentsObject;
 
     protected void Awake()
     {
