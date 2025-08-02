@@ -11,11 +11,11 @@ public class UI_OutfitPopup : UI_Popup
     private void OnEnable()
     {
         PopupAnimation(ContentsObject);
-        //CharacterFX();
+
     }
     private void OnDisable()
     {
-        //CharacterOFF();
+        CharacterOFF();
     }
 
 
@@ -23,6 +23,9 @@ public class UI_OutfitPopup : UI_Popup
     {
         _customizationPopup = FindObjectOfType<UI_CustomizationPopup>();
 
+        // 질문
+        //characterObject = GameObject.FindWithTag("Player");
+        //CharacterFX();
     }
     private void Update()
     {   // event?
