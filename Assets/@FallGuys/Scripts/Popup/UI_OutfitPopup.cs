@@ -1,12 +1,13 @@
-using DG.Tweening;
 using UnityEngine;
 
 public class UI_OutfitPopup : UI_Popup
 {
     private UI_CustomizationPopup _customizationPopup;
 
-    [SerializeField]
-    private GameObject characterObject;
+
+
+
+
 
     private void OnEnable()
     {
@@ -15,7 +16,7 @@ public class UI_OutfitPopup : UI_Popup
     }
     private void OnDisable()
     {
-        CharacterOFF();
+
     }
 
 
@@ -24,8 +25,7 @@ public class UI_OutfitPopup : UI_Popup
         _customizationPopup = FindObjectOfType<UI_CustomizationPopup>();
 
         // 질문
-        //characterObject = GameObject.FindWithTag("Player");
-        //CharacterFX();
+
     }
     private void Update()
     {   // event?
@@ -36,13 +36,8 @@ public class UI_OutfitPopup : UI_Popup
         }
     }
 
-    void CharacterFX()
+    void OnClickButton()
     {
-        characterObject.transform.DOMoveX(-4f, 0.5f).SetEase(Ease.OutBounce); ;
-    }
-    void CharacterOFF()
-    {
-        characterObject.transform.DOMoveX(0f, 0.5f).SetEase(Ease.OutBounce); ;
 
     }
 
