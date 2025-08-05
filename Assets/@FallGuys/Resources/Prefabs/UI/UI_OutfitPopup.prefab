@@ -3891,6 +3891,7 @@ MonoBehaviour:
   bodyButtonsContainer: {fileID: 9110247789175280859}
   headButtonsContainer: {fileID: 7642489315207977461}
   tailButtonsContainer: {fileID: 7461433782698636453}
+  selectedToggleText: {fileID: 3124002609745872773}
 --- !u!1 &7064136442568811343
 GameObject:
   m_ObjectHideFlags: 0

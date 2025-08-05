@@ -134,22 +134,7 @@ public class CharacterCustomSelection : MonoBehaviour
         RegisterPartCategory(CharacterPartType.Head, playerCharacter.headParentObject);
         RegisterPartCategory(CharacterPartType.Tail, playerCharacter.tailParentObject);
 
-        //foreach (var category in partCategories)
-        //{
-        //    if (!partsDictionary.ContainsKey(category.type))
-        //    {
-        //        partsDictionary.Add(category.type, category);
-        //    }
 
-        //    if (category.parentObject != null)
-        //    {
-        //        category.partInstances = category.parentObject
-        //                                         .GetComponentsInChildren<Transform>(true)
-        //                                         .Where(t => t.gameObject != category.parentObject)
-        //                                         .Select(t => t.gameObject)
-        //                                         .ToList();
-        //    }
-        //}
     }
 
     private void InitializeMaterial()
