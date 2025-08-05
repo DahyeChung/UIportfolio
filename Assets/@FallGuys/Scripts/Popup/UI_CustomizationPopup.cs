@@ -21,6 +21,7 @@ public class UI_CustomizationPopup : UI_Popup
     {
         PopupAnimation(ContentsObject);
         outfitButton.onClick.AddListener(OnClickOutfitButton);
+        CharacterFX();
     }
     private void OnDisable()
     {
@@ -32,7 +33,7 @@ public class UI_CustomizationPopup : UI_Popup
     {
         // _outfitPopup = Managers.UI.ShowPopupUI<UI_OutfitPopup>();
         characterObject = GameObject.FindWithTag("Player");
-        CharacterFX();
+
 
     }
 
