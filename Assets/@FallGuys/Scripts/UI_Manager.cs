@@ -37,7 +37,6 @@ public class UI_Manager
             // 스택에 이미 같은 타입의 팝업이 있다면 함수를 그냥 종료
             if (p.GetType() == typeof(T))
             {
-                Debug.Log($"이미 {typeof(T).Name} 팝업이 열려있습니다.");
                 return null;
             }
         }
@@ -45,7 +44,6 @@ public class UI_Manager
         if (string.IsNullOrEmpty(name))
         {
             name = typeof(T).Name;
-            Debug.Log($"▶ Trying to Instantiate Popup Prefab: '{name}'");
         }
 
 

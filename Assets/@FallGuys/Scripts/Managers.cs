@@ -13,7 +13,6 @@ public class Managers : MonoBehaviour
         if (_instance != null)
             return;
 
-        Debug.Log("Managers Init called.");
         GameObject go = GameObject.Find("@Managers");
         if (go == null)
         {

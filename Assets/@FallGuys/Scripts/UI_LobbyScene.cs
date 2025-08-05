@@ -46,11 +46,9 @@ public class UI_LobbyScene : UI_Base
     public AudioClip popupSfx;
 
     private ColorBlock toggleSelected;
-    private string colorCodeRed = "#FF0000";
 
     private void Awake()
     {
-        Debug.Log("Awake");
         Init();
     }
 
@@ -95,7 +93,6 @@ public class UI_LobbyScene : UI_Base
         ShopToggle.group = menuGroup;
 
         menuGroup.allowSwitchOff = false;
-        Debug.Log("Lobby Scene Initialized");
         ToggleInit();
 
 
@@ -119,7 +116,6 @@ public class UI_LobbyScene : UI_Base
         _creativePopup.gameObject.SetActive(false);
         _famePopup.gameObject.SetActive(false);
         _shopPopup.gameObject.SetActive(false);
-        Debug.Log("Toggle Initialized");
     }
 
 

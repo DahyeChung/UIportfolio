@@ -7,9 +7,9 @@ public class ColorButton : MonoBehaviour
 
     public void OnClickColorButton()
     {
-        PlayerCharacter playerCharacter = (PlayerCharacter)FindFirstObjectByType(typeof(PlayerCharacter));
+        CharacterCustomSelection customManager = (CharacterCustomSelection)FindFirstObjectByType(typeof(CharacterCustomSelection));
 
-        playerCharacter.UpdateColor(myColor);
+        customManager.UpdateColor(myColor);
     }
 
 }
