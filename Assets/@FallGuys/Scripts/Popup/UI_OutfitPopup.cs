@@ -1,61 +1,61 @@
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
+// 각 파츠 타입에 필요한 UI 요소들을 묶어서 관리하기 위한 클래스
+[System.Serializable]
+public class PartsCategory
+{
+    public CharacterPartType type;
+    public Toggle toggle;
+    public GameObject contentPanel;
+    public Transform buttonContainer;
+    public string categoryName;
+}
 
 public class UI_OutfitPopup : UI_Popup
 {
     private UI_CustomizationPopup _customizationPopup;
 
-    [Header("토글")]
-    public ToggleGroup customToggleGroup;
-    public Toggle ColorToggle;
-    public Toggle WeaponToggle;
-    public Toggle FaceToggle;
-    public Toggle BodyToggle;
-    public Toggle HeadPartToggle;
-    public Toggle TailToggle;
+    [Header("공통 UI")]
+    [SerializeField] private ToggleGroup customToggleGroup;
+    [SerializeField] private TextMeshProUGUI selectedToggleText;
+    [SerializeField] private GameObject partButtonPrefab;
 
-    [Header("온오프 컨텐츠")]
-    public GameObject ColorContents;
-    public GameObject WeaponContents;
-    public GameObject FaceContents;
-    public GameObject BodyContents;
-    public GameObject HeadPartContents;
-    public GameObject TailContents;
+    [Header("색상 UI (별도 관리)")]
+    [SerializeField] private Toggle ColorToggle;
+    [SerializeField] private GameObject ColorContents;
 
-    [Header("커스텀 파츠")]
+    [Header("파츠 UI 목록")]
+    [Tooltip("여기에 각 파츠 타입별 UI 요소들을 연결해주세요.")]
+    [SerializeField] private List<PartsCategory> uiPartLinks;
+
+    [Header("커스텀 매니저")]
     public CharacterCustomSelection customManager;
-    public GameObject partButtonPrefab;
-
-    // TODO: 플레이어 프리팹과 직접 연결함. 개선 방법 모색 필요
-    public Transform weaponButtonsContainer;
-    public Transform faceButtonsContainer;
-    public Transform bodyButtonsContainer;
-    public Transform headButtonsContainer;
-    public Transform tailButtonsContainer;
-
-    public TextMeshProUGUI selectedToggleText;
 
     private void OnEnable()
     {
         if (ContentsObject != null)
             PopupAnimation(ContentsObject);
 
+        // 리스너 등록
         ColorToggle.onValueChanged.AddListener(OnClickColorToggle);
-        WeaponToggle.onValueChanged.AddListener(OnClickWeaponToggle);
-        FaceToggle.onValueChanged.AddListener(OnClickFaceToggle);
-        BodyToggle.onValueChanged.AddListener(OnClickBodyToggle);
-        HeadPartToggle.onValueChanged.AddListener(OnClickHeadPartToggle);
-        TailToggle.onValueChanged.AddListener(OnClickTailToggle);
+        foreach (var link in uiPartLinks)
+        {
+            PartsCategory currentLink = link;
+            link.toggle.onValueChanged.AddListener((isOn) => OnPartToggleChanged(isOn, currentLink));
+        }
     }
+
     private void OnDisable()
     {
         ColorToggle.onValueChanged.RemoveListener(OnClickColorToggle);
-        WeaponToggle.onValueChanged.RemoveListener(OnClickWeaponToggle);
-        FaceToggle.onValueChanged.RemoveListener(OnClickFaceToggle);
-        BodyToggle.onValueChanged.RemoveListener(OnClickBodyToggle);
-        HeadPartToggle.onValueChanged.RemoveListener(OnClickHeadPartToggle);
-        TailToggle.onValueChanged.RemoveListener(OnClickTailToggle);
+        foreach (var link in uiPartLinks)
+        {
+            link.toggle.onValueChanged.RemoveAllListeners();
+        }
     }
 
     public override void Init()
@@ -72,16 +72,18 @@ public class UI_OutfitPopup : UI_Popup
 
     void ToggleInit()
     {
+        // 토글 그룹 설정
         ColorToggle.group = customToggleGroup;
-        WeaponToggle.group = customToggleGroup;
-        FaceToggle.group = customToggleGroup;
-        BodyToggle.group = customToggleGroup;
-        HeadPartToggle.group = customToggleGroup;
-        TailToggle.group = customToggleGroup;
+        foreach (var link in uiPartLinks)
+        {
+            link.toggle.group = customToggleGroup;
+        }
 
+        // 기본으로 색상 토글을 선택
         if (ColorToggle != null)
         {
             ColorToggle.isOn = true;
+            OnClickColorToggle(true); // 활성화 시 컨텐츠도 바로 보이도록 호출
         }
     }
 
@@ -97,21 +99,21 @@ public class UI_OutfitPopup : UI_Popup
 
     #region Toggle Event
 
+    // 하나의 콘텐츠 패널만 활성화하는 함수
     void SetActiveOnly(GameObject contentToActivate)
     {
-        GameObject[] allContents = {
-            ColorContents, WeaponContents, FaceContents,
-            BodyContents, HeadPartContents, TailContents
-        };
+        // 모든 콘텐츠 패널 목록을 동적으로 생성
+        var allContents = uiPartLinks.Select(link => link.contentPanel).ToList();
+        allContents.Add(ColorContents);
+
         foreach (GameObject content in allContents)
         {
-            // null 체크 추가하여 안정성 향상
             if (content != null)
                 content.SetActive(content == contentToActivate);
         }
     }
 
-
+    // 색상 토글 전용 이벤트 핸들러
     void OnClickColorToggle(bool isOn)
     {
         if (!isOn) return;
@@ -119,59 +121,25 @@ public class UI_OutfitPopup : UI_Popup
         selectedToggleText.text = "COLOR";
     }
 
-    void OnClickWeaponToggle(bool isOn)
+    // 모든 파츠 토글을 처리하는 제네릭 이벤트 핸들러
+    void OnPartToggleChanged(bool isOn, PartsCategory link)
     {
         if (!isOn) return;
-        SetActiveOnly(WeaponContents);
-        GeneratePartButtons(CharacterPartType.Weapon, weaponButtonsContainer);
-        selectedToggleText.text = "WEAPON";
+
+        SetActiveOnly(link.contentPanel);
+        GeneratePartButtons(link.type, link.buttonContainer);
+        selectedToggleText.text = link.categoryName;
     }
 
-    void OnClickFaceToggle(bool isOn)
-    {
-        if (!isOn) return;
-        SetActiveOnly(FaceContents);
-        GeneratePartButtons(CharacterPartType.Face, faceButtonsContainer);
-        selectedToggleText.text = "FACE";
-
-    }
-
-    void OnClickBodyToggle(bool isOn)
-    {
-        if (!isOn) return;
-        SetActiveOnly(BodyContents);
-        GeneratePartButtons(CharacterPartType.Body, bodyButtonsContainer);
-        selectedToggleText.text = "BODY";
-
-    }
-
-    void OnClickHeadPartToggle(bool isOn)
-    {
-        if (!isOn) return;
-        SetActiveOnly(HeadPartContents);
-        GeneratePartButtons(CharacterPartType.Head, headButtonsContainer);
-        selectedToggleText.text = "HEAD";
-
-    }
-
-    void OnClickTailToggle(bool isOn)
-    {
-        if (!isOn) return;
-        SetActiveOnly(TailContents);
-        GeneratePartButtons(CharacterPartType.Tail, tailButtonsContainer);
-        selectedToggleText.text = "TAIL";
-
-    }
     #endregion
 
     #region Custom Parts Event
 
     private void GeneratePartButtons(CharacterPartType type, Transform container)
     {
-        // 컨테이너가 설정되지 않았으면 함수를 실행하지 않음 (안정성)
-        if (container == null) return;
+        if (container == null || customManager == null || partButtonPrefab == null) return;
 
-        // 기존 버튼들 제거
+
         foreach (Transform child in container)
         {
             Destroy(child.gameObject);
@@ -181,12 +149,10 @@ public class UI_OutfitPopup : UI_Popup
 
         for (int i = 0; i < partCount; i++)
         {
-            // 버튼 프리팹이 설정되지 않았으면 중단 (안정성)
-            if (partButtonPrefab == null) continue;
-
             GameObject buttonObj = Instantiate(partButtonPrefab, container);
 
-            Text buttonText = buttonObj.GetComponentInChildren<Text>();
+            // Text 대신 TextMeshProUGUI 사용을 권장합니다.
+            TextMeshProUGUI buttonText = buttonObj.GetComponentInChildren<TextMeshProUGUI>();
             if (buttonText != null)
             {
                 buttonText.text = customManager.GetPartsName(type, i);
@@ -195,7 +161,6 @@ public class UI_OutfitPopup : UI_Popup
             Button button = buttonObj.GetComponent<Button>();
             int itemIndex = i;
 
-            // 불필요한 캐스팅 제거
             button.onClick.AddListener(() =>
             {
                 customManager.ChangePart(type, itemIndex);

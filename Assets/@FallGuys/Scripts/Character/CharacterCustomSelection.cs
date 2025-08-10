@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-// 캐릭터 분장실 
+// 캐릭터 파츠의 종류를 정의합니다.
 public enum CharacterPartType
 {
     Weapon,
@@ -14,110 +13,93 @@ public enum CharacterPartType
     Tail
 }
 
+// 각 파츠 카테고리별로 필요한 데이터를 정의합니다.
+// 이제 모든 파츠는 메시 리스트를 직접 가집니다.
 [System.Serializable]
 public class PartCategory
 {
+    [Tooltip("이 카테고리의 파츠 타입입니다.")]
     public CharacterPartType type;
+
+    [Tooltip("이 파츠의 메시가 적용될 렌더러를 포함한 부모 오브젝트입니다.")]
     public GameObject parentObject;
-    [HideInInspector] public List<GameObject> partInstances = new List<GameObject>();
-    [HideInInspector] public List<Mesh> partMeshes = new List<Mesh>();
+
+    [Tooltip("교체할 수 있는 메시(3D 모델)의 목록입니다.")]
+    public List<Mesh> partMeshes = new List<Mesh>();
 }
 
 public class CharacterCustomSelection : MonoBehaviour
 {
-
     // 외형 데이터 ==============================================================
     [Header("색상 변경 대상")]
-    [SerializeField] private SkinnedMeshRenderer mainBodyRenderer;
-    [SerializeField] private Color defaultColor;
+    [SerializeField]
+    [Tooltip("캐릭터의 주 몸체 색상을 변경할 SkinnedMeshRenderer입니다.")]
+    private SkinnedMeshRenderer mainBodyRenderer;
+
+    [SerializeField]
+    [Tooltip("캐릭터의 기본 색상입니다.")]
+    private Color defaultColor;
 
     [Header("파츠 목록")]
-    // [SerializeField] private List<PartCategory> partCategories;
+    [Tooltip("여기에서 캐릭터의 모든 파츠 카테고리를 설정합니다.")]
+    [SerializeField]
+    private List<PartCategory> partCategories;
 
     // 내부 시스템 변수 ==========================================================
-    private PlayerCharacter playerCharacter;
     private Dictionary<CharacterPartType, PartCategory> partsDictionary;
     private Material mainBodyMaterial;
 
-    public List<Mesh> gloveMeshes;
-
-
     private void Awake()
     {
-        playerCharacter = GetComponent<PlayerCharacter>();
-        if (playerCharacter == null)
-        {
-            Debug.LogError("CharacterCustomSelection: 같은 게임 오브젝트에 PlayerCharacter 스크립트가 없습니다");
-            return; // 없으면 초기화를 진행할 수 없으므로 중단
-        }
-
         InitializeParts();
         InitializeMaterial();
     }
 
     private void Start()
     {
+        // 게임 시작 시 모든 파츠를 기본(첫 번째) 메시로 설정
+        foreach (PartCategory category in partCategories)
+        {
+            ChangePart(category.type, 0);
+        }
+
+        // 기본 색상 적용
         if (mainBodyMaterial != null)
         {
             UpdateColor(defaultColor);
         }
     }
-    private void RegisterPartCategory(CharacterPartType type, GameObject parentObject)
-    {
-        // PlayerCharacter에 parentObject가 설정되어 있지 않으면 건너뜁니다.
-        if (parentObject == null) return;
 
-        // PartCategory 객체를 코드로 직접 생성
-        PartCategory category = new PartCategory
-        {
-            type = type,
-            parentObject = parentObject,
-            partInstances = parentObject.transform
-                                        .Cast<Transform>()
-                                        .Select(t => t.gameObject)
-                                        .ToList()
-        };
+    // 공개 API (외부 클래스에서 호출) ==================================================
 
-        if (type == CharacterPartType.Weapon)
-        {
-            category.partMeshes = gloveMeshes;
-        }
-
-        // Dictionary에 추가
-        if (!partsDictionary.ContainsKey(type))
-        {
-            partsDictionary.Add(type, category);
-        }
-    }
-
-    // 공개 API 외부클래스에서 호출 ==================================================
     public void ChangePart(CharacterPartType type, int index)
     {
         if (partsDictionary.TryGetValue(type, out PartCategory category))
         {
-            if (type == CharacterPartType.Weapon)
+            SkinnedMeshRenderer partMeshRenderer = category.parentObject.GetComponentInChildren<SkinnedMeshRenderer>();
+
+            if (partMeshRenderer == null)
             {
-                SkinnedMeshRenderer partMeshRenderer = category.parentObject.GetComponentInChildren<SkinnedMeshRenderer>();
-                if (partMeshRenderer != null)
-                {
-                    partMeshRenderer.sharedMesh = category.partMeshes[index];
-                }
+                Debug.LogWarning($"{type} 파츠의 SkinnedMeshRenderer를 찾을 수 없습니다.");
+                return;
+            }
+
+            // 인덱스가 유효한지 확인하고 메시를 교체합니다.
+            if (index >= 0 && index < category.partMeshes.Count)
+            {
+                partMeshRenderer.sharedMesh = category.partMeshes[index];
+                partMeshRenderer.gameObject.SetActive(true); // 렌더러가 꺼져있을 수 있으니 켭니다.
             }
             else
             {
-                for (int i = 0; i < category.partInstances.Count; i++)
-                {
-                    category.partInstances[i].SetActive(false);
-                }
-
-                if (index >= 0 && index < category.partInstances.Count)
-                {
-                    category.partInstances[index].SetActive(true);
-                }
+                // 유효하지 않은 인덱스(예: -1)는 파츠를 숨기는 것으로 간주합니다.
+                partMeshRenderer.sharedMesh = null;
+                partMeshRenderer.gameObject.SetActive(false);
             }
         }
-
     }
+
+
     public void UpdateColor(Color color)
     {
         if (mainBodyMaterial != null)
@@ -126,59 +108,43 @@ public class CharacterCustomSelection : MonoBehaviour
         }
     }
 
-    // 특정 타입의 파츠 개수를 물어보는 함수
+
     public int GetPartsCount(CharacterPartType partType)
     {
-        if (partType == CharacterPartType.Weapon)
-        {
-            if (partsDictionary.TryGetValue(partType, out PartCategory testCategory))
-            {
-                return testCategory.partMeshes.Count;
-            }
-            return 0;
-        }
-
         if (partsDictionary.TryGetValue(partType, out PartCategory category))
-            return category.partInstances.Count;
+        {
+            Debug.Log(category.partMeshes.Count);
+            return category.partMeshes.Count;
+        }
         return 0;
     }
-    // 특정 타입의 파츠의 이름을 얻을 때 사용
+
+
     public string GetPartsName(CharacterPartType partType, int index)
     {
-        if (partType == CharacterPartType.Weapon)
+        if (partsDictionary.TryGetValue(partType, out PartCategory category))
         {
-            if (partsDictionary.TryGetValue(partType, out PartCategory category))
+            if (index >= 0 && index < category.partMeshes.Count && category.partMeshes[index] != null)
             {
-                if (index >= 0 && index < category.partMeshes.Count)
-                { return category.partMeshes[index].name; }
+                return category.partMeshes[index].name;
             }
-            return "N/A";
         }
-        else
-        {
-            if (partsDictionary.TryGetValue(partType, out PartCategory category))
-            {
-                if (index >= 0 && index < category.partInstances.Count)
-                { return category.partInstances[index].name; }
-            }
-            return "N/A";
-        }
+        return "N/A";
     }
 
-    // 내부 구현 함수 ==============================================================
+
     private void InitializeParts()
     {
         partsDictionary = new Dictionary<CharacterPartType, PartCategory>();
-
-        // 각 파츠 타입에 대해 PlayerCharacter에 있는 parentObject를 사용하여 직접 등록합니다.
-        RegisterPartCategory(CharacterPartType.Weapon, playerCharacter.weaponParentObject);
-        RegisterPartCategory(CharacterPartType.Face, playerCharacter.faceParentObject);
-        RegisterPartCategory(CharacterPartType.Body, playerCharacter.bodyParentObject);
-        RegisterPartCategory(CharacterPartType.Head, playerCharacter.headParentObject);
-        RegisterPartCategory(CharacterPartType.Tail, playerCharacter.tailParentObject);
-
-
+        foreach (var category in partCategories)
+        {
+            if (!partsDictionary.ContainsKey(category.type))
+            {
+                partsDictionary.Add(category.type, category);
+            }
+        }
     }
+
 
     private void InitializeMaterial()
     {
@@ -187,7 +153,4 @@ public class CharacterCustomSelection : MonoBehaviour
             mainBodyMaterial = mainBodyRenderer.material;
         }
     }
-
 }
-
-
