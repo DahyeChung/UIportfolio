@@ -48,10 +48,14 @@ public class UI_CustomizationPopup : UI_Popup
 
     void CharacterFX()
     {
+        if (characterObject == null)
+            return;
         characterObject.transform.DOMoveX(-4f, 0.5f).SetEase(Ease.OutBounce); ;
     }
     void CharacterOFF()
     {
+        if (characterObject == null)
+            return;
         characterObject.transform.DOMoveX(0f, 0.5f).SetEase(Ease.OutBounce); ;
 
     }

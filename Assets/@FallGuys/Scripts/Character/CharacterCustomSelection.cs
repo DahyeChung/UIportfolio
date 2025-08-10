@@ -6,7 +6,9 @@ using UnityEngine;
 public enum CharacterPartType
 {
     Weapon,
-    Face,
+    Eye,
+    Mouth,
+    Nose,
     Body,
     Head,
     Tail
@@ -18,6 +20,7 @@ public class PartCategory
     public CharacterPartType type;
     public GameObject parentObject;
     [HideInInspector] public List<GameObject> partInstances = new List<GameObject>();
+    [HideInInspector] public List<Mesh> partMeshes = new List<Mesh>();
 }
 
 public class CharacterCustomSelection : MonoBehaviour
@@ -35,6 +38,9 @@ public class CharacterCustomSelection : MonoBehaviour
     private PlayerCharacter playerCharacter;
     private Dictionary<CharacterPartType, PartCategory> partsDictionary;
     private Material mainBodyMaterial;
+
+    public List<Mesh> gloveMeshes;
+
 
     private void Awake()
     {
@@ -72,6 +78,11 @@ public class CharacterCustomSelection : MonoBehaviour
                                         .ToList()
         };
 
+        if (type == CharacterPartType.Weapon)
+        {
+            category.partMeshes = gloveMeshes;
+        }
+
         // Dictionary에 추가
         if (!partsDictionary.ContainsKey(type))
         {
@@ -84,14 +95,25 @@ public class CharacterCustomSelection : MonoBehaviour
     {
         if (partsDictionary.TryGetValue(type, out PartCategory category))
         {
-            for (int i = 0; i < category.partInstances.Count; i++)
+            if (type == CharacterPartType.Weapon)
             {
-                category.partInstances[i].SetActive(false);
+                SkinnedMeshRenderer partMeshRenderer = category.parentObject.GetComponentInChildren<SkinnedMeshRenderer>();
+                if (partMeshRenderer != null)
+                {
+                    partMeshRenderer.sharedMesh = category.partMeshes[index];
+                }
             }
-
-            if (index >= 0 && index < category.partInstances.Count)
+            else
             {
-                category.partInstances[index].SetActive(true);
+                for (int i = 0; i < category.partInstances.Count; i++)
+                {
+                    category.partInstances[i].SetActive(false);
+                }
+
+                if (index >= 0 && index < category.partInstances.Count)
+                {
+                    category.partInstances[index].SetActive(true);
+                }
             }
         }
 
@@ -107,6 +129,15 @@ public class CharacterCustomSelection : MonoBehaviour
     // 특정 타입의 파츠 개수를 물어보는 함수
     public int GetPartsCount(CharacterPartType partType)
     {
+        if (partType == CharacterPartType.Weapon)
+        {
+            if (partsDictionary.TryGetValue(partType, out PartCategory testCategory))
+            {
+                return testCategory.partMeshes.Count;
+            }
+            return 0;
+        }
+
         if (partsDictionary.TryGetValue(partType, out PartCategory category))
             return category.partInstances.Count;
         return 0;
@@ -114,12 +145,24 @@ public class CharacterCustomSelection : MonoBehaviour
     // 특정 타입의 파츠의 이름을 얻을 때 사용
     public string GetPartsName(CharacterPartType partType, int index)
     {
-        if (partsDictionary.TryGetValue(partType, out PartCategory category))
+        if (partType == CharacterPartType.Weapon)
         {
-            if (index >= 0 && index < category.partInstances.Count)
-            { return category.partInstances[index].name; }
+            if (partsDictionary.TryGetValue(partType, out PartCategory category))
+            {
+                if (index >= 0 && index < category.partMeshes.Count)
+                { return category.partMeshes[index].name; }
+            }
+            return "N/A";
         }
-        return "N/A";
+        else
+        {
+            if (partsDictionary.TryGetValue(partType, out PartCategory category))
+            {
+                if (index >= 0 && index < category.partInstances.Count)
+                { return category.partInstances[index].name; }
+            }
+            return "N/A";
+        }
     }
 
     // 내부 구현 함수 ==============================================================
