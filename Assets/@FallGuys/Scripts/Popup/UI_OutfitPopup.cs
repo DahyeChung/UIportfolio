@@ -11,7 +11,7 @@ public class PartsCategory
     public CharacterPartType type;
     public Toggle toggle;
     public GameObject contentPanel;
-    public Transform buttonContainer;
+    public Transform buttonContainer; // 생성된 버튼 담을 Contents Components
     public string categoryName;
 }
 
