@@ -1,31 +1,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// 캐릭터 파츠의 종류를 정의합니다.
+// 캐릭터 파츠의 종류를 정의합니다. (변경 없음)
 public enum CharacterPartType
 {
     Weapon,
     Eye,
     Mouth,
-    Nose,
     Body,
     Head,
     Tail
 }
 
 // 각 파츠 카테고리별로 필요한 데이터를 정의합니다.
-// 이제 모든 파츠는 메시 리스트를 직접 가집니다.
 [System.Serializable]
 public class PartCategory
 {
     [Tooltip("이 카테고리의 파츠 타입입니다.")]
     public CharacterPartType type;
 
-    [Tooltip("이 파츠의 메시가 적용될 렌더러를 포함한 부모 오브젝트입니다.")]
-    public GameObject parentObject;
-
-    [Tooltip("교체할 수 있는 메시(3D 모델)의 목록입니다.")]
-    public List<Mesh> partMeshes = new List<Mesh>();
+    [Tooltip("하이어라키에 배치된 파츠 오브젝트들의 목록입니다.")]
+    public List<GameObject> partInstances = new List<GameObject>();
 }
 
 public class CharacterCustomSelection : MonoBehaviour
@@ -57,7 +52,7 @@ public class CharacterCustomSelection : MonoBehaviour
 
     private void Start()
     {
-        // 게임 시작 시 모든 파츠를 기본(첫 번째) 메시로 설정
+        // 게임 시작 시 모든 파츠를 기본(첫 번째) 파츠로 설정하고 나머지는 비활성화
         foreach (PartCategory category in partCategories)
         {
             ChangePart(category.type, 0);
@@ -72,33 +67,26 @@ public class CharacterCustomSelection : MonoBehaviour
 
     // 공개 API (외부 클래스에서 호출) ==================================================
 
+    /// <summary>
+    /// 지정된 타입의 캐릭터 파츠를 교체합니다.
+    /// </summary>
+    /// <param name="type">교체할 파츠 타입</param>
+    /// <param name="index">활성화할 파츠의 인덱스. 나머지는 모두 비활성화됩니다.</param>
     public void ChangePart(CharacterPartType type, int index)
     {
-        if (partsDictionary.TryGetValue(type, out PartCategory category))
+        if (!partsDictionary.TryGetValue(type, out PartCategory category)) return;
+
+        // 해당 카테고리의 모든 파츠를 순회
+        for (int i = 0; i < category.partInstances.Count; i++)
         {
-            SkinnedMeshRenderer partMeshRenderer = category.parentObject.GetComponentInChildren<SkinnedMeshRenderer>();
-
-            if (partMeshRenderer == null)
+            GameObject partObject = category.partInstances[i];
+            if (partObject != null)
             {
-                Debug.LogWarning($"{type} 파츠의 SkinnedMeshRenderer를 찾을 수 없습니다.");
-                return;
-            }
-
-            // 인덱스가 유효한지 확인하고 메시를 교체합니다.
-            if (index >= 0 && index < category.partMeshes.Count)
-            {
-                partMeshRenderer.sharedMesh = category.partMeshes[index];
-                partMeshRenderer.gameObject.SetActive(true); // 렌더러가 꺼져있을 수 있으니 켭니다.
-            }
-            else
-            {
-                // 유효하지 않은 인덱스(예: -1)는 파츠를 숨기는 것으로 간주합니다.
-                partMeshRenderer.sharedMesh = null;
-                partMeshRenderer.gameObject.SetActive(false);
+                // 선택된 인덱스와 일치하는 파츠만 활성화하고 나머지는 모두 비활성화
+                partObject.SetActive(i == index);
             }
         }
     }
-
 
     public void UpdateColor(Color color)
     {
@@ -108,30 +96,26 @@ public class CharacterCustomSelection : MonoBehaviour
         }
     }
 
-
     public int GetPartsCount(CharacterPartType partType)
     {
         if (partsDictionary.TryGetValue(partType, out PartCategory category))
         {
-            Debug.Log(category.partMeshes.Count);
-            return category.partMeshes.Count;
+            return category.partInstances.Count;
         }
         return 0;
     }
-
 
     public string GetPartsName(CharacterPartType partType, int index)
     {
         if (partsDictionary.TryGetValue(partType, out PartCategory category))
         {
-            if (index >= 0 && index < category.partMeshes.Count && category.partMeshes[index] != null)
+            if (index >= 0 && index < category.partInstances.Count && category.partInstances[index] != null)
             {
-                return category.partMeshes[index].name;
+                return category.partInstances[index].name;
             }
         }
         return "N/A";
     }
-
 
     private void InitializeParts()
     {
@@ -144,7 +128,6 @@ public class CharacterCustomSelection : MonoBehaviour
             }
         }
     }
-
 
     private void InitializeMaterial()
     {
