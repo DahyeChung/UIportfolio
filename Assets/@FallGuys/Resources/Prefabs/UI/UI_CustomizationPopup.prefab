@@ -1627,6 +1627,7 @@ MonoBehaviour:
   outfitButton: {fileID: 6885449730446979937}
   theatricsButton: {fileID: 6691894823153709807}
   interfaceButton: {fileID: 6933524122291287516}
+  characterObject: {fileID: 0}
 --- !u!1 &6992032492874691085
 GameObject:
   m_ObjectHideFlags: 0
