@@ -55,7 +55,7 @@ public class CharacterCustomSelection : MonoBehaviour
         // 게임 시작 시 모든 파츠를 기본(첫 번째) 파츠로 설정하고 나머지는 비활성화
         foreach (PartCategory category in partCategories)
         {
-            ChangePart(category.type, 0);
+            ChangePart(category.type, Random.Range(0, partCategories.Count));
         }
 
         // 기본 색상 적용
